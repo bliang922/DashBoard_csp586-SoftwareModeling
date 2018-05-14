@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <script src="dataframe.js"></script>
+    <script src="Chart.bundle.js"></script>
+    <script src="Dataset.js"></script>
+    <script type="text/javascript" src="DataUnit.js"></script>
+    <script type="text/javascript" src="ChartUnitConfig.js" > </script>
+    <script type="text/javascript" src="ConfiguredChart.js"></script>
+    <script type="text/javascript" src="BarChart.js"></script>
+    <script type="text/javascript" src="View.js"></script>
+    <script type="text/javascript" src="ChartFactory.js"></script>
+    <script type="text/javascript" src="Controler.js"></script>
+    <script type="text/javascript" src="ChartConfig.js"></script>
+    <script type="text/javascript" src="StackedBarChart.js"></script>
+    <script type="text/javascript" src="LineChart.js"></script>
+    <script type="text/javascript" src="PieChart.js"></script>
+    <script type="text/javascript" src="DoughnutChart.js"></script>
+
+    <link href="app.css" rel="stylesheet">
+</head>
+
+<body>
+<img class= "image1" src="environment image.jpg" > <h1>CSP 586 Project--Dashboard for Environment<br></h1>
+<div class="center" id="importDiv">
+        <p>You can input dataset from local file in data Folder
+            <input type="file" id="fileinput" onchange="importtable()">
+            Or, Selecting dataset from one of them   <select name="Datasets" id="Datasetid" onChange="Adddataset()">
+                <option value="" disabled="disabled" selected="selected">Please select a dataset</option>
+                <option value="Building_Energy_and_Water_Use" >Building_Energy_and_Water_Use_Metrics</option>
+                <option value="Water_Use_Average_By_Zipcode" >Water_Use_Average_By_Zipcode</option>
+                <option value="SALT_LAKE_CITY_-_WATER_CONSum">SALT_LAKE_CITY_-_WATER_CONSUMPTION_BY_TRACT</option>
+                <option value="Water_Elec_Usage_from_05_-13" >Water_and_Electric_Usage_from_2005_-_2013</option>
+                <option value="Water_Consumption_New_York">Water_Consumption_In_The_New_York_City</option>
+            </select></p>
+</div>
+    <div  class='center' id="dataDiv">
+    </div>
+    <div id="dfTable"></div>
+    <div class="center" id="checkboxDiv"></div>
+    <div class="center" id="groupByDiv"></div>
+    <div class="center" id="chartDiv">
+        <div class="center" id="canvasDiv"  style="width:70%">
+            <canvas id="myChart"  width="300" height="300" /></canvas>
+        </div>
+        <div  id="chartSettingDiv">
+        </div>
+    </div>
+</body>
+<script>
+    var DataFrame = dfjs.DataFrame;
+    var dataDiv = document.getElementById("dataDiv");
+    var dataset;
+    var controler;
+    var myChart;
+    var view;
+    
+    function Adddataset(){
+        var datasetname = document.getElementById('Datasetid');
+        //console.log(datasetname.value);
+        DataFrame.fromCSV('data/'+ datasetname.value +'.csv').then((df) => {dataset = df; main();});
+            //this.Showtable(this.columns, this.dataframeArray);
+
+    }
+
+    function importtable(){
+        var datasetname = document.getElementById('fileinput');
+        var s = datasetname.value;    //.substr(12);
+
+        s=s.substr(s.lastIndexOf('\\')+1);
+        DataFrame.fromCSV('data/'+s).then(function(df) {
+            dataset = df;
+            main();
+        });
+
+    }
+    function main(){
+        var data=new MyDataFrame(new DataFrame(dataset));
+        view=new View(data.df);
+        controler=new Controler(view,data);
+        data.registerObservers(view);
+        data.registerObservers(controler);
+        view.createTable(dataDiv,data.df);
+    }
+    
+    function selectColumns(){
+        controler.selectColumns();
+    }
+    function filter(){
+        controler.filter();
+    }
+    function groupbyClicked(){
+        controler.groupby();
+    }
+    function chartButtonClicked(){
+        controler.chart();
+    }
+
+    function addFilter(){
+        controler.addFilter();
+    }
+    function addValue(){
+        controler.addValue();
+    }
+    function addGroupby(){
+        controler.addGroupby();
+    }
+    function deleteGroupby(button){
+        controler.deleteGroupby(button);
+    }
+    function deleteValue(button){
+        controler.deleteValue(button);
+    }
+    function deleteFilter(button){
+        controler.deleteFilter(button);
+    }
+</script>
+<script type="text/javascript" src="MyDataFrame.js"></script>
+</html>

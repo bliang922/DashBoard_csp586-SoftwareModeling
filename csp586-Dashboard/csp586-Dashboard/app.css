@@ -1,0 +1,71 @@
+.button{
+    display: inline-block;
+    padding: 4px 12px;
+    font-size: 16px;
+    line-height: 20px;
+    text-align: center;
+    vertical-align: middle;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    cursor: pointer;
+    height: 80px;
+    background-color: #f5f5f5;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+    border: 1px solid #cccccc;
+    -webkit-border-radius: 4px;
+}
+.image1 {
+    width: 280px;
+    height: 45px;
+    display: inline;
+    float: left;
+    top: 0;
+}
+.center {
+    border: 1px solid powderblue;
+    padding: 30px;
+    margin: 10px;
+}
+.font{
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: small;
+}
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+#importDiv{
+    border: 1px solid powderblue;
+    padding: 0;
+}
+#dataDiv {
+    padding: 0;
+    class: center;
+    overflow: scroll;
+    /*width: 1200px;*/
+    height: 400px;
+    border: 1px solid black;
+}
+#chartdiv{
+    border: 1px solid powderblue;
+    padding: 0;
+    margin: 5px;
+}
+#chartSettingDiv {
+    display: inline-block;
+}
+#canvasDiv{
+    display: inline-block;
+}
+
